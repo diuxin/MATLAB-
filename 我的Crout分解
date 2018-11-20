@@ -1,0 +1,33 @@
+function [L,U]=crout(A)
+b=size(A);
+%b(1)行数
+%b（2）列数
+if b(1)~=b(2)
+    error('error');
+end
+if b(1)~=rank(A)
+    error('error');
+end
+%初始化
+L=zeros(n,n);
+U=zeros(n,n);
+for i=1:n
+    U(i,i)=1;
+end
+%开始计算
+for k=1:n
+    for i=k:n
+        temp_sum=0;
+        for t=1:k-1
+            temp_sum=temp_sum+L(i,t)*U(t,k);
+        end
+        L(i,k)=A(i,k)-temp_sum
+    end
+    for i=k+1:n
+        for t=k+1:n
+            temp_sum=temp_sum+L(i,t)*U(t,k);
+        end
+        U(i,k)=A(i,k)-temp_sum
+    end
+end
+end
